@@ -1,0 +1,15 @@
+.container {
+    background-image: url("/assets/images/trainbackground.jpg");
+}
+
+.jumbotron {
+    background-color: #948f8f;
+}
+
+.card-header {
+    background-color: #948f8f;
+}
+
+#schedule-head {
+    background-color: #948f8f;
+}
