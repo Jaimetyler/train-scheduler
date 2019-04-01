@@ -35,12 +35,13 @@ var config = {
       console.log(frequency);
       console.log(firstTrainTime);
       ////////////////???????????????????????????????????????/////////////////////
-      
+      var trainNameCaps = trainName.toUpperCase();
+      var destinationCaps = destination.toUpperCase();
       
       //push data to firebase
       database.ref().push({
-          trainName: trainName,
-          destination: destination,
+          trainName: trainNameCaps,
+          destination: destinationCaps,
           frequency: frequency,
           firstTrainTime: firebase.database.ServerValue.TIMESTAMP
           //dateAdded: firebase.database.ServerValue.TIMESTAMP
@@ -50,7 +51,7 @@ var config = {
     database.ref().on("child_added", function(snapshot){
         var sv = snapshot.val();
 
-        //var convertedTrainTime = moment(childSnapshot.val(), firstTrainTime, "HH:mm").subtract(1, "years");
+        //var convertedTrainTime = moment(snapshot.val(), firstTrainTime, "HH:mm").subtract(1, "years");
         //console.log("convertedTime" + convertedTrainTime);
         console.log(sv.trainName);
         console.log(sv.destination);
@@ -68,7 +69,7 @@ var config = {
     <td>TBA</td>
   </tr>` 
 
-  $(".new-train").append(appendTable);
+  $(".new-train").append(appendTable)
   },
   function(errorObject){
     console.log("errors handled: " + errorObject.code);
