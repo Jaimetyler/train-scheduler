@@ -1,4 +1,4 @@
-console.log("I'm here!")
+console.log("I'm here!");
 
 //initializing firebase
 var config = {
@@ -17,7 +17,7 @@ var config = {
   var trainName = "";
   var destination = "";
   var frequency = 0;
-  var firstTrainTime = 0;
+  var firstTrainTime = "";
 
   
   
@@ -43,25 +43,27 @@ var config = {
           trainName: trainNameCaps,
           destination: destinationCaps,
           frequency: frequency,
-          firstTrainTime: firebase.database.ServerValue.TIMESTAMP
-          //dateAdded: firebase.database.ServerValue.TIMESTAMP
-        })
-    })
+          firstTrainTime: firstTrainTime,
+          dateAdded: firebase.database.ServerValue.TIMESTAMP
+        });
+    });
     
-    database.ref().on("child_added", function(snapshot){
-        var sv = snapshot.val();
+    database.ref().on("child_added", function(childSnapshot){
+        //var sv = snapshot.val();
+        var nextArrival = "";
+        var minsAway = 0;
 
-        //var convertedTrainTime = moment(snapshot.val(), firstTrainTime, "HH:mm").subtract(1, "years");
+        //var convertedTrainTime = moment(childSnapshot.val().firstTrainTime, "hh:mm").subtract(1, "years");
         //console.log("convertedTime" + convertedTrainTime);
         console.log(sv.trainName);
         console.log(sv.destination);
         console.log(sv.frequency);
         console.log(sv.firstTrainTime);
         
-        //var currentTime = moment();
+        var currentTime = moment();
 
       var appendTable = `
-      <tr> 
+    <tr> 
     <th scope="row">` + sv.trainName + `</th>
     <td>${sv.destination}</td>
     <td>${sv.frequency}</td>
@@ -70,6 +72,8 @@ var config = {
   </tr>` 
 
   $(".new-train").append(appendTable)
+
+  //need to clear the boxes after the new train is added
   },
   function(errorObject){
     console.log("errors handled: " + errorObject.code);
