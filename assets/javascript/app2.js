@@ -28,10 +28,13 @@ $(document).ready(function(){
         firstTrainTime = $("#first-train").val().trim();
         frequency = $("#frequency-input").val().trim();
 
+        var capsName = name.toUpperCase();
+        var capsDestination = destination.toUpperCase();
+
         // Pushing to database
         database.ref().push({
-            name: name,
-            destination: destination,
+            name: capsName,
+            destination: capsDestination,
             firstTrainTime: firstTrainTime,
             frequency: frequency,
             dateAdded: firebase.database.ServerValue.TIMESTAMP
@@ -53,26 +56,20 @@ $(document).ready(function(){
         var nextTrain = moment().add(minAway, "minutes");
         nextTrain = moment(nextTrain).format("hh:mm");
 
+        
+           
         $(".new-train").append("<tr><td>" + childSnapshot.val().name +
                 "</td><td>" + childSnapshot.val().destination +
                 "</td><td>" + childSnapshot.val().frequency +
                "</td><td>" + nextTrain + 
                "</td><td>" + minAway + "</td></tr>");
-
+         
+         
      
-
-  
-
             // Handle the errors
         }, function(errorObject) {
             console.log("Errors handled: " + errorObject.code);
     });
 
-    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
-        // Change the HTML to reflect
-        $("#name-display").html(snapshot.val().name);
-        $("#email-display").html(snapshot.val().email);
-        $("#age-display").html(snapshot.val().age);
-        $("#comment-display").html(snapshot.val().comment);
-    });
+   
 });
